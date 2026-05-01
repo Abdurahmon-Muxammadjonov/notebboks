@@ -1,27 +1,48 @@
-import { ChevronDown, MapPin } from "lucide-react";
+"use client";
+
+import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+
+import { useAppPreferences } from "@/components/app-preferences-provider";
 
 export function TopBar() {
+  const { t } = useAppPreferences();
+
   return (
-    <div className="w-full bg-black px-4 text-[11px] text-white md:text-xs">
-      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
-        <div className="flex items-center gap-1 font-medium tracking-wide text-white/95">
-          <span>Mon–Thu: 9:00 AM - 5:30 PM</span>
-          <ChevronDown className="h-3.5 w-3.5" />
+    <div className="app-topbar w-full px-4 text-[12px]">
+      <div className="mx-auto flex max-w-360 flex-wrap items-center justify-center gap-x-5 gap-y-2 py-2.5 md:justify-between">
+        {/* Left: Hours */}
+        <div className="flex items-center gap-1 font-medium">
+          <span className="text-white/70">{t("topBar.days")}</span>
+          <span className="font-bold">{t("topBar.hours")}</span>
+          <ChevronDown className="h-3.5 w-3.5 text-white/70" />
         </div>
 
-        <div className="flex items-center gap-2 text-center text-white/85">
-          <MapPin className="hidden h-3.5 w-3.5 sm:block" />
-          <span>Visit our showroom in 1234 Street Address City Address, 1234</span>
-          <a href="#" className="border-b border-white pb-px font-semibold text-white">
-            Contact Us
-          </a>
+        {/* Center: Showroom */}
+        <div className="hidden items-center gap-1.5 text-center text-white/80 md:flex">
+          <span>{t("topBar.showroom")}</span>
+          <Link
+            href="/#support"
+            className="border-b border-white font-semibold text-white hover:text-white/80"
+          >
+            {t("topBar.contactUs")}
+          </Link>
         </div>
 
-        <div className="flex items-center gap-4 font-medium">
-          <span>Call Us: (00) 1234 5678</span>
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-white/90">
-            <span>fb</span>
-            <span>ig</span>
+        {/* Right: Phone + Social */}
+        <div className="flex items-center gap-3 font-medium">
+          <span>{t("topBar.callUs")} (00) 1234 5678</span>
+          <div className="flex items-center gap-2">
+            {/* Facebook */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+            </svg>
+            {/* Instagram */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 stroke-white fill-none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+            </svg>
           </div>
         </div>
       </div>

@@ -109,6 +109,26 @@ export async function getProductsByTags(tags: ProductCategoryTag[] = [...PRODUCT
   return data.map((row) => normalizeProduct(row as SupabaseProductRow));
 }
 
+export async function getProductById(id: string): Promise<ProductItem | null> {
+  const supabase = createSupabaseBrowserlessClient();
+
+  if (!supabase) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, name, description, category, price, image_url, stock_quantity")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error || !data) {
+    return null;
+  }
+
+  return normalizeProduct(data as SupabaseProductRow);
+}
+
 export async function getProducts(): Promise<ProductItem[]> {
   return getCatalogProducts({});
 }
